@@ -1,0 +1,42 @@
+{
+  "name": "fuzzytree",
+  "version": "0.0.0",
+  "description": "Fuzzy tree structure with non-deterministic nodes paths",
+  "main": "FuzzyTree.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --opts tests/mocha.opts tests",
+    "build": "./node_modules/.bin/babel --modules umd es6/ --out-dir ./ --source-maps inline",
+    "lint": "./node_modules/.bin/jshint es6/**.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EyalAr/FuzzyTree.git"
+  },
+  "keywords": [
+    "tree",
+    "node",
+    "path",
+    "pattern",
+    "fuzzy"
+  ],
+  "author": "Eyal Arubas <EyalArubas@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EyalAr/FuzzyTree/issues"
+  },
+  "homepage": "https://github.com/EyalAr/FuzzyTree",
+  "dependencies": {
+    "lodash.isarray": "^3.0.4",
+    "lodash.isstring": "^3.0.1",
+    "lodash.lastindexof": "^3.0.2"
+  },
+  "devDependencies": {
+    "babel": "^5.6.14",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5",
+    "should": "^7.0.1"
+  }
+}
