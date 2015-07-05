@@ -92,3 +92,56 @@ it will be resetted.
 - `path {String|Array}`: The path of the new node.
 
 **Returns** the newly created node.
+
+## Paths structure
+
+A path is simply a string with one or more sections. Sections are separated
+by a `'.'`. Sections in a path form the nodes hirarchy in the tree.  
+For example, the path `'country.city.street'` has three sections `'country'`,
+`'city'` and `'street'`. The node under `'country.city.street'` is a child of
+the node under `'country.city'`, etc.
+
+```
+        country
+          / \
+         /   \
+        /     \
+      city    ...
+      / \
+     /   \
+    /     \
+ street   ...
+```
+
+### Fuzzy paths & wildcards
+
+Any section of a path can be a wildcard; in which case the path is termed a
+"fuzzy path". When querying the tree for matches of a specific path, any node
+under a fuzzy path with a matching structure will be returned as well.
+
+There are two types of wildcards:
+
+- `'*'`: Matches exactly one section.
+- `'#'`: Matches one or more sections.
+
+For example, let's say we have two nodes in the tree under the following fuzzy
+paths:
+
+`'country.*.street'`
+`'country.#.street'`
+
+```
+        country
+          / \
+         /   \
+        /     \
+       *       #
+      /         \
+     /           \
+    /             \
+ street         street
+```
+
+When we query for matches against `'country.city.street'` both nodes will be
+returend. But when querying against `'country.state.city.street'`, only the
+second node will be returned.
