@@ -70,7 +70,7 @@ class FuzzyTree{
     }
 
     _match(path){
-        var res = [], child;
+        var res = [], child, that = this;
 
         if (!path.length && !this._dummy) {
             // if the path is empty, return the node itself.
@@ -92,17 +92,29 @@ class FuzzyTree{
             // traverse this child with all possible sub-paths of the requested
             // path.
             child = this._children[this._greedy];
-            if (child) {
-                var grandchilds = Object.keys(child._children);
-                if (!grandchilds.length) _push(res, child._match([]));
-                else grandchilds.filter(gc =>
-                    gc !== this._wildcard &&
-                    gc !== this._greedy
-                ).forEach(gc => {
-                    // we need to consume as much as possible from the path
-                    var i = _lastIndexOf(path.slice(1), gc);
-                    if (i > -1){
-                        _push(res, child._match(path.slice(i + 1)));
+            if (child)
+                traverseGreedy(child);
+        }
+
+        function traverseGreedy(child){
+            var grandchilds = Object.keys(child._children),
+                wildcard = child._wildcard,
+                greedy = child._greedy;
+            if (!grandchilds.length) _push(res, child._match([]));
+            else {
+                grandchilds.forEach(gc => {
+                    if (gc === wildcard) {
+                        // consume as much as possible, only if at least two left
+                        traverseGreedy(child._children[wildcard]);
+                    } else if (gc === greedy) {
+                        // consume one and move on
+                        _push(res, child._match(path.slice(1)));
+                    } else {
+                        // we need to consume as much as possible from the path
+                        var i = _lastIndexOf(path.slice(1), gc);
+                        if (i > -1){
+                            _push(res, child._match(path.slice(i + 1)));
+                        }
                     }
                 });
             }
@@ -155,7 +167,13 @@ class FuzzyTree{
     }
 
     _insert(path){
-        if (!path.length) return this.reset();
+        if (!path.length){
+            if (this._dummy) {
+                this._dummy = false;
+                return this;
+            }
+            return this.reset();
+        }
 
         if (!this._children[path[0]]){
             // create a dummy node along the path

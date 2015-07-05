@@ -218,6 +218,46 @@ describe("match", function(){
 
         });
 
+        describe("greedy tokens consecutive", function(){
+
+            var node = new FuzzyTree(),
+                pattern = "test.#.#.#.world",
+                newNode = node.insert(pattern);
+
+            it("should match one node", function(){
+                var path = "test.hello.nice.mice.world",
+                    nodes = node.match(path);
+
+                nodes.should.have.length(1);
+                nodes[0].should.be.instanceOf(FuzzyTree);
+                nodes[0].should.equal(newNode);
+            });
+
+            it("should match one node", function(){
+                var path = "test.hello.world.foo.bar.world",
+                    nodes = node.match(path);
+
+                nodes.should.have.length(1);
+                nodes[0].should.be.instanceOf(FuzzyTree);
+                nodes[0].should.equal(newNode);
+            });
+
+            it("should match zero nodes", function(){
+                var path = "test.hello.world",
+                    nodes = node.match(path);
+
+                nodes.should.have.length(0);
+            });
+
+            it("should match zero nodes", function(){
+                var path = "test.world.foo.bar",
+                    nodes = node.match(path);
+
+                nodes.should.have.length(0);
+            });
+
+        });
+
         describe("greedy tokens at multiple locations", function(){
 
             var node = new FuzzyTree(),
@@ -254,7 +294,7 @@ describe("match", function(){
         describe("greedy tokens and non greedy tokens at multiple locations", function(){
 
             var node = new FuzzyTree(),
-                pattern = "test.hello.#.foo.*.#.bar.*",
+                pattern = "test.hello.#.foo.*.#.*.bar.*",
                 newNode = node.insert(pattern);
 
             it("should match one node", function(){
