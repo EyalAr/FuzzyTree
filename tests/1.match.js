@@ -7,7 +7,7 @@ describe("match", function(){
 
         var node = new FuzzyTree(),
             path = "test.hello.world",
-            newNode = node.insert(path);;
+            newNode = node.insert(path);
 
         it("should match one node", function(){
             var nodes = node.match(path);

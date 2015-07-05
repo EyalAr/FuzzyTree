@@ -56,7 +56,6 @@ class FuzzyTree{
      * the given path.
      */
     match(path){
-        path = path || [];
         if (_isString(path)) path = path.split(this._separator);
         if (!_isArray(path))
             throw Error("path must be an array or a string");
@@ -118,7 +117,6 @@ class FuzzyTree{
      * @return {FuzzyTree|Null} The found node, or null if not found.
      */
     find(path){
-        path = path || [];
         if (_isString(path)) path = path.split(this._separator);
         if (!_isArray(path))
             throw Error("path must be an array or a string");
@@ -145,7 +143,6 @@ class FuzzyTree{
      * @return {FuzzyTree} The newly created node.
      */
     insert(path){
-        path = path || [];
         if (_isString(path)) path = path.split(this._separator);
         if (!_isArray(path))
             throw Error("path must be an array or a string");
