@@ -127,7 +127,7 @@ There are two types of wildcards:
 For example, let's say we have two nodes in the tree under the following fuzzy
 paths:
 
-`'country.*.street'`
+`'country.*.street'`  
 `'country.#.street'`
 
 ```

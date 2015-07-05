@@ -1,8 +1,10 @@
 /* jshint esnext:true */
 
-import _isString from 'lodash.isstring';
-import _isArray from 'lodash.isarray';
-import _lastIndexOf from 'lodash.lastindexof';
+import {
+    isString as _isString,
+    isArray as _isArray,
+    lastIndexOf as _lastIndexOf
+} from 'lodash';
 
 class FuzzyTree{
 

@@ -1,5 +1,5 @@
 import should from "should";
-import FuzzyTree from "../es6/FuzzyTree";
+import FuzzyTree from "../src/FuzzyTree";
 
 describe("match", function(){
 

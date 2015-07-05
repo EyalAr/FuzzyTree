@@ -1,0 +1,34 @@
+{
+  "name": "fuzzytree",
+  "main": "dist/FuzzyTree.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/EyalAr/FuzzyTree",
+  "authors": [
+    "Eyal Arubas <eyalarubas@gmail.com>"
+  ],
+  "description": "Fuzzy tree structure with non-deterministic nodes paths",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "tree",
+    "node",
+    "path",
+    "pattern",
+    "fuzzy"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "~3.10.0"
+  }
+}
