@@ -2,7 +2,7 @@
   "name": "fuzzytree",
   "version": "0.0.1",
   "description": "Fuzzy tree structure with non-deterministic nodes paths",
-  "main": "FuzzyTree.js",
+  "main": "dist/FuzzyTree.js",
   "directories": {
     "test": "tests"
   },
