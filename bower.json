@@ -1,7 +1,7 @@
 {
   "name": "fuzzytree",
   "main": "dist/FuzzyTree.js",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://github.com/EyalAr/FuzzyTree",
   "authors": [
     "Eyal Arubas <eyalarubas@gmail.com>"
