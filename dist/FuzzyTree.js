@@ -176,23 +176,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var grandchilds = (0, _lodash.keys)(child._children),
 	                    wildcard = child._wildcard,
 	                    greedy = child._greedy;
-	                if (!grandchilds.length) _push(res, child._match([]));else {
-	                    (0, _lodash.forEach)(grandchilds, function (gc) {
-	                        if (gc === wildcard) {
-	                            // consume as much as possible, only if at least two left
-	                            traverseGreedy(child._children[wildcard]);
-	                        } else if (gc === greedy) {
-	                            // consume one and move on
-	                            _push(res, child._match(path.slice(1)));
-	                        } else {
-	                            // we need to consume as much as possible from the path
-	                            var i = (0, _lodash.lastIndexOf)(path.slice(1), gc);
-	                            if (i > -1) {
-	                                _push(res, child._match(path.slice(i + 1)));
-	                            }
+	                _push(res, child._match([]));
+	                (0, _lodash.forEach)(grandchilds, function (gc) {
+	                    if (gc === wildcard) {
+	                        // consume as much as possible, only if at least two left
+	                        traverseGreedy(child._children[wildcard]);
+	                    } else if (gc === greedy) {
+	                        // consume one and move on
+	                        _push(res, child._match(path.slice(1)));
+	                    } else {
+	                        // we need to consume as much as possible from the path
+	                        var i = (0, _lodash.lastIndexOf)(path.slice(1), gc);
+	                        if (i > -1) {
+	                            _push(res, child._match(path.slice(i + 1)));
 	                        }
-	                    });
-	                }
+	                    }
+	                });
 	            }
 	
 	            return res;

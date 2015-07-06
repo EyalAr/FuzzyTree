@@ -383,6 +383,43 @@ describe("match", function(){
 
         });
 
+        describe("one node a child of another greedy node", function(){
+
+            var node = new FuzzyTree(),
+                pattern1 = "test.hello.#",
+                pattern2 = "test.hello.#.foo",
+                newNode1 = node.insert(pattern1),
+                newNode2 = node.insert(pattern2);
+
+            it("should match one node", function(){
+                var path = "test.hello.world.nice.to.meet.you.foo.bar",
+                    nodes = node.match(path);
+
+                nodes.should.have.length(1);
+                nodes[0].should.be.instanceOf(FuzzyTree);
+                nodes[0].should.equal(newNode1);
+            });
+
+            it("should match two nodes", function(){
+                var path = "test.hello.world.hi.bar.baz.bar.foo",
+                    nodes = node.match(path);
+
+                nodes.should.have.length(2);
+                nodes[0].should.be.instanceOf(FuzzyTree);
+                nodes[1].should.be.instanceOf(FuzzyTree);
+                nodes.should.containEql(newNode1);
+                nodes.should.containEql(newNode2);
+            });
+
+            it("should match zero nodes", function(){
+                var path = "hello",
+                    nodes = node.match(path);
+
+                nodes.should.have.length(0);
+            });
+
+        });
+
     });
 
 });
