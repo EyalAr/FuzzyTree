@@ -151,9 +151,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                child,
 	                that = this;
 	
-	            if (!path.length && !this._dummy) {
+	            if (!path.length) {
 	                // if the path is empty, return the node itself.
-	                res.push(this);
+	                if (!this._dummy) res.push(this);
 	            } else {
 	                // if the path to one of the children is equal to the next section
 	                // in the requested path, traverse this child.
