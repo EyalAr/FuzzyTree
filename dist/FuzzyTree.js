@@ -134,11 +134,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            if ((0, _lodash.isString)(path)) path = path.split(this._separator);
 	            if (!(0, _lodash.isArray)(path)) throw Error('path must be an array or a string');
-	            if (!path.every(_lodash.isString)) throw Error('all path sections must be strings');
-	            if (path.some(function (s) {
+	            if (!(0, _lodash.every)(path, _lodash.isString)) throw Error('all path sections must be strings');
+	            if ((0, _lodash.some)(path, function (s) {
 	                return s.length === 0;
 	            })) throw Error('path section cannot be empty');
-	            if (path.some(function (s) {
+	            if ((0, _lodash.some)(path, function (s) {
 	                return s === _this._wildcard || s === _this._greedy;
 	            })) throw Error('path section cannot be a wildcard');
 	
@@ -173,11 +173,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	
 	            function traverseGreedy(child) {
-	                var grandchilds = Object.keys(child._children),
+	                var grandchilds = (0, _lodash.keys)(child._children),
 	                    wildcard = child._wildcard,
 	                    greedy = child._greedy;
 	                if (!grandchilds.length) _push(res, child._match([]));else {
-	                    grandchilds.forEach(function (gc) {
+	                    (0, _lodash.forEach)(grandchilds, function (gc) {
 	                        if (gc === wildcard) {
 	                            // consume as much as possible, only if at least two left
 	                            traverseGreedy(child._children[wildcard]);
@@ -208,8 +208,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function find(path) {
 	            if ((0, _lodash.isString)(path)) path = path.split(this._separator);
 	            if (!(0, _lodash.isArray)(path)) throw Error('path must be an array or a string');
-	            if (!path.every(_lodash.isString)) throw Error('all path sections must be strings');
-	            if (path.some(function (s) {
+	            if (!(0, _lodash.every)(path, _lodash.isString)) throw Error('all path sections must be strings');
+	            if ((0, _lodash.some)(path, function (s) {
 	                return s.length === 0;
 	            })) throw Error('path section cannot be empty');
 	
@@ -221,7 +221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!path.length) return this._dummy ? null : this;
 	            if (!this._children[path[0]]) return null;
 	
-	            return this._children[path[0]].find(path.slice(1));
+	            return this._children[path[0]]._find(path.slice(1));
 	        }
 	    }, {
 	        key: 'insert',
@@ -236,8 +236,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function insert(path) {
 	            if ((0, _lodash.isString)(path)) path = path.split(this._separator);
 	            if (!(0, _lodash.isArray)(path)) throw Error('path must be an array or a string');
-	            if (!path.every(_lodash.isString)) throw Error('all path sections must be strings');
-	            if (path.some(function (s) {
+	            if (!(0, _lodash.every)(path, _lodash.isString)) throw Error('all path sections must be strings');
+	            if ((0, _lodash.some)(path, function (s) {
 	                return s.length === 0;
 	            })) throw Error('path section cannot be empty');
 	
@@ -260,7 +260,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._children[path[0]]._dummy = true;
 	            }
 	
-	            return this._children[path[0]].insert(path.slice(1));
+	            return this._children[path[0]]._insert(path.slice(1));
 	        }
 	    }]);
 	
@@ -268,7 +268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})();
 	
 	function _push(target, elements) {
-	    elements.forEach(function (e) {
+	    (0, _lodash.forEach)(elements, function (e) {
 	        return target.push(e);
 	    });
 	}

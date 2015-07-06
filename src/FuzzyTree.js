@@ -3,7 +3,11 @@
 import {
     isString as _isString,
     isArray as _isArray,
-    lastIndexOf as _lastIndexOf
+    lastIndexOf as _lastIndexOf,
+    keys as _keys,
+    forEach as _forEach,
+    every as _every,
+    some as _some
 } from 'lodash';
 
 class FuzzyTree{
@@ -59,11 +63,11 @@ class FuzzyTree{
         if (_isString(path)) path = path.split(this._separator);
         if (!_isArray(path))
             throw Error("path must be an array or a string");
-        if (!path.every(_isString))
+        if (!_every(path, _isString))
             throw Error("all path sections must be strings");
-        if (path.some(s => s.length === 0))
+        if (_some(path, s => s.length === 0))
             throw Error("path section cannot be empty");
-        if (path.some(s => s === this._wildcard || s === this._greedy))
+        if (_some(path, s => s === this._wildcard || s === this._greedy))
             throw Error("path section cannot be a wildcard");
 
         return this._match(path);
@@ -97,12 +101,12 @@ class FuzzyTree{
         }
 
         function traverseGreedy(child){
-            var grandchilds = Object.keys(child._children),
+            var grandchilds = _keys(child._children),
                 wildcard = child._wildcard,
                 greedy = child._greedy;
             if (!grandchilds.length) _push(res, child._match([]));
             else {
-                grandchilds.forEach(gc => {
+                _forEach(grandchilds, gc => {
                     if (gc === wildcard) {
                         // consume as much as possible, only if at least two left
                         traverseGreedy(child._children[wildcard]);
@@ -132,9 +136,9 @@ class FuzzyTree{
         if (_isString(path)) path = path.split(this._separator);
         if (!_isArray(path))
             throw Error("path must be an array or a string");
-        if (!path.every(_isString))
+        if (!_every(path, _isString))
             throw Error("all path sections must be strings");
-        if (path.some(s => s.length === 0))
+        if (_some(path, s => s.length === 0))
             throw Error("path section cannot be empty");
 
         return this._find(path);
@@ -144,7 +148,7 @@ class FuzzyTree{
         if (!path.length) return this._dummy ? null : this;
         if (!this._children[path[0]]) return null;
 
-        return this._children[path[0]].find(path.slice(1));
+        return this._children[path[0]]._find(path.slice(1));
     }
 
     /**
@@ -158,9 +162,9 @@ class FuzzyTree{
         if (_isString(path)) path = path.split(this._separator);
         if (!_isArray(path))
             throw Error("path must be an array or a string");
-        if (!path.every(_isString))
+        if (!_every(path, _isString))
             throw Error("all path sections must be strings");
-        if (path.some(s => s.length === 0))
+        if (_some(path, s => s.length === 0))
             throw Error("path section cannot be empty");
 
         return this._insert(path);
@@ -181,12 +185,12 @@ class FuzzyTree{
             this._children[path[0]]._dummy = true;
         }
 
-        return this._children[path[0]].insert(path.slice(1));
+        return this._children[path[0]]._insert(path.slice(1));
     }
 }
 
 function _push(target, elements){
-    elements.forEach(e => target.push(e));
+    _forEach(elements, e => target.push(e));
 }
 
 export default FuzzyTree;
